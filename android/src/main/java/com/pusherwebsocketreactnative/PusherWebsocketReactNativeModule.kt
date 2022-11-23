@@ -32,14 +32,14 @@ class PusherWebsocketReactNativeModule(reactContext: ReactApplicationContext) :
   }
 
   private fun emitEvent(eventName: String, params: Any?) {
+    val vendorEventName = "pusher:$eventName"
     val jsModule = this.reactApplicationContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
     if (params is Map<*, *>) {
-      jsModule.emit(eventName, Arguments.makeNativeMap(params as Map<String, Any>))
+      jsModule.emit(vendorEventName, Arguments.makeNativeMap(params as Map<String, Any>))
     }
-
-    if (params is String) {
-      jsModule.emit(eventName, params)
+    else if (params is String) {
+      jsModule.emit(vendorEventName, params)
     }
   }
 

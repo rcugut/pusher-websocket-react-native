@@ -24,7 +24,8 @@ import Foundation
     }
 
     func callback(name:String, body:Any) -> Void {
-        self.sendEvent(withName:name, body:body)
+        let vendorEventName:String = "pusher:" + name
+        self.sendEvent(withName:vendorEventName, body:body)
     }
 
     func initialize(_ args:[String: Any], resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) {

@@ -6,6 +6,8 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
+const RN_EMITTER_EVENT_NAME_PREFIX = 'pusher:';
+
 const PusherWebsocketReactNative = NativeModules.PusherWebsocketReactNative
   ? NativeModules.PusherWebsocketReactNative
   : new Proxy(
@@ -112,7 +114,10 @@ export class Pusher {
   }
 
   public addListener(event: string, callback: (event: any) => void) {
-    return this.eventEmitter.addListener(event, callback);
+    return this.eventEmitter.addListener(
+      RN_EMITTER_EVENT_NAME_PREFIX + event,
+      callback
+    );
   }
 
   public init(args: {
